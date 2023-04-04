@@ -59,4 +59,12 @@ $randMulti = array_rand($randMultiarray);
 $randMultiVal = $randMultiarray[$randMulti];
 echo "먹을 갯수: ", $randMultiVal;
 
+// function fnc_sum(int $param_a, int $param_b)
+// {
+//     $sum = $param_a + $param_b;
+//     return $sum;
+// }
+
+// echo "\n 1 + 2 = ".fnc_sum(1,2);
+
 ?>
