@@ -40,40 +40,48 @@ $randomSushi = array_rand($recipe);
 $ingredient = $recipe[$randomSushi];
 echo "메뉴: ", $randomSushi, ", 주재료: ", $ingredient, "\n";
 
-$multiDimension = array(
-    range(1, 20),
-    array("못 먹어", "맘껏 먹어"),
-    array(
-        array(30, 40, 100)
-    )
-);
+// $multiDimension = array(
+//     range(1, 20),
+//     array("못 먹어", "맘껏 먹어"),
+//     array(
+//         array(30, 40, 100)
+//     )
+// );
 
-$randMulti = $multiDimension[mt_rand(0, count($multiDimension) - 1)];
-$index1 = mt_rand(0, count($multiDimension[0]) - 1);
-$index2 = mt_rand(0, count($multiDimension[1]) - 1);
-$index3 = mt_rand(0, count($multiDimension[2][0]) - 1);
+// $randMulti = $multiDimension[mt_rand(0, count($multiDimension) - 1)];
+// $index1 = mt_rand(0, count($multiDimension[0]) - 1);
+// $index2 = mt_rand(0, count($multiDimension[1]) - 1);
+// $index3 = mt_rand(0, count($multiDimension[2][0]) - 1);
 
-// $randMulti = $multiDimension[0][$index1] . ' ' . $multiDimension[1][$index2] . ' ' . $multiDimension[2][0][$index3];
-$randMultiarray = array($multiDimension[0][$index1], $multiDimension[1][$index2], $multiDimension[2][0][$index3]);
-$randMulti = array_rand($randMultiarray);
-$randMultiVal = $randMultiarray[$randMulti];
-echo "먹을 갯수: ", $randMultiVal;
+// // $randMulti = $multiDimension[0][$index1] . ' ' . $multiDimension[1][$index2] . ' ' . $multiDimension[2][0][$index3];
+// $randMultiarray = array($multiDimension[0][$index1], $multiDimension[1][$index2], $multiDimension[2][0][$index3]);
+// $randMulti = array_rand($randMultiarray);
+// $randMultiVal = $randMultiarray[$randMulti];
+// echo "먹을 갯수: ", $randMultiVal;
 
-function getRandomValue($multiDimension) {
-    if (is_array($multiDimension)) {
-        $randIndex = mt_rand(0, count($multiDimension) - 1);
-        $randValue = getRandomValue($multiDimension[$randIndex]);
+function getRandomValue($multi_array) {
+    if (is_array($multi_array)) {
+        $randIndex = mt_rand(0, count($multi_array) - 1);
+        $randValue = getRandomValue($multi_array[$randIndex]);
         return $randValue;
     } else {
-        return $multiDimension;
+        return $multi_array;
     }
 }
 
 $multiDimension = array(
     range(1, 20),
-    array("못 먹어", "맘껏 먹어"),
     array(
-        array(30, 40, 100)
+        "못 먹어",
+        "맘껏 먹어",
+        array(
+            63, 78
+        )
+        ),
+    array(
+        array(30, 40, 100),
+        "어떡하지?",
+        array(26, 28, 52)
     )
 );
 
