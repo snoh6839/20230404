@@ -59,6 +59,28 @@ $randMulti = array_rand($randMultiarray);
 $randMultiVal = $randMultiarray[$randMulti];
 echo "먹을 갯수: ", $randMultiVal;
 
+function getRandomValue($multiDimension) {
+    if (is_array($multiDimension)) {
+        $randIndex = mt_rand(0, count($multiDimension) - 1);
+        $randValue = getRandomValue($multiDimension[$randIndex]);
+        return $randValue;
+    } else {
+        return $multiDimension;
+    }
+}
+
+$multiDimension = array(
+    range(1, 20),
+    array("못 먹어", "맘껏 먹어"),
+    array(
+        array(30, 40, 100)
+    )
+);
+
+$randMulti = getRandomValue($multiDimension);
+echo "먹을 갯수: ", $randMulti;
+
+
 // function fnc_sum(int $param_a, int $param_b)
 // {
 //     $sum = $param_a + $param_b;
