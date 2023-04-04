@@ -61,7 +61,7 @@
         }
 
         .login input[type="text"],
-        .login input[type="password"] {
+        .login input[type="pass_no"] {
             display: block;
             margin-bottom: 10px;
             padding: 10px;
@@ -113,10 +113,10 @@
         <div class="login">
             <h1>Login Page</h1>
             <form method="post" action="login.php">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="mem_ID">mem_ID:</label>
+                <input type="text" id="mem_ID" name="mem_ID" required>
+                <label for="pass_no">pass_no:</label>
+                <input type="pass_no" id="pass_no" name="pass_no" required>
 
                 <button type="submit">Login</button>
             </form>
@@ -127,37 +127,37 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    $mem_ID = $_POST["mem_ID"];
+    $pass_no = $_POST["pass_no"];
 
     // DB 연결 정보
     $servername = "localhost";
-    $db_username = "root";
-    $db_password = "root506";
-    $dbname = "todoist";
+    $db_mem_ID = "root";
+    $db_pass_no = "root506";
+    $dbname = "test_todolist";
 
     try {
         // PDO 객체 생성
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $db_username, $db_password);
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $db_mem_ID, $db_pass_no);
 
         // PDO 예외 처리 모드 설정
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // 쿼리 실행
-        $stmt = $conn->prepare("SELECT * FROM users WHERE username=:username AND password=:password");
-        $stmt->bindParam(":username", $username);
-        $stmt->bindParam(":password", $password);
+        $stmt = $conn->prepare("SELECT * FROM member_inf WHERE mem_ID=:mem_ID AND pass_no=:pass_no");
+        $stmt->bindParam(":mem_ID", $mem_ID);
+        $stmt->bindParam(":pass_no", $pass_no);
         $stmt->execute();
 
         // 결과 확인
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            $_SESSION['username'] = $result["username"];
-            echo "<div class='success'>Welcome, {$_SESSION['username']}! You have successfully logged in.</div>";
+            $_SESSION['mem_ID'] = $result["mem_ID"];
+            echo "<div class='success'>Welcome, {$_SESSION['mem_ID']}! You have successfully logged in.</div>";
             exit();
         } else {
-            $login_error = "Invalid username or password.";
+            $login_error = "Invalid mem_ID or pass_no.";
             echo "<div class='error'>$login_error</div>";
         }
     } catch (PDOException $e) {
