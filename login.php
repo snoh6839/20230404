@@ -120,13 +120,6 @@
 
                 <button type="submit">Login</button>
             </form>
-            <?php
-            if (isset($login_error)) {
-                echo "<div class='error'>$login_error</div>";
-            } elseif (isset($_SESSION['username'])) {
-                echo "<div class='success'>Welcome, {$_SESSION['username']}!</div>";
-            }
-            ?>
         </div>
 </body>
 
@@ -158,12 +151,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // 결과 확인
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if ($result) {
-            $_SESSION["username"] = $result["username"];
-            header("Location: success.php");
+            $_SESSION['username'] = $result["username"];
+            echo "<div class='success'>Welcome, {$_SESSION['username']}! You have successfully logged in.</div>";
             exit();
         } else {
             $login_error = "Invalid username or password.";
+            echo "<div class='error'>$login_error</div>";
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
