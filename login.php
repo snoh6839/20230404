@@ -130,4 +130,48 @@
         </div>
 </body>
 
+<?php
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // DB 연결 정보
+    $servername = "localhost";
+    $db_username = "root";
+    $db_password = "root506";
+    $dbname = "todoist";
+
+    try {
+        // PDO 객체 생성
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $db_username, $db_password);
+
+        // PDO 예외 처리 모드 설정
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // 쿼리 실행
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username=:username AND password=:password");
+        $stmt->bindParam(":username", $username);
+        $stmt->bindParam(":password", $password);
+        $stmt->execute();
+
+        // 결과 확인
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            $_SESSION["username"] = $result["username"];
+            header("Location: success.php");
+            exit();
+        } else {
+            $login_error = "Invalid username or password.";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
+    // 연결 종료
+    $conn = null;
+}
+?>
+
 </html>
