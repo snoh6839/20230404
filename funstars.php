@@ -62,4 +62,21 @@ function printStars4($rows)
 $rows = 5;
 printStars4($rows);
 
+//5
+function printStars5($rows, $shape)
+{
+    for ($i = 0; $i <= $rows; $i++) {
+        echo $shape;
+    }
+    echo "\n";
+}
+
+$rows = 5;
+$shape = 'ㄴ';
+
+
+for ($i = 0; $i < $rows; $i++) {
+    printStars5($i, $shape);
+}
+
 ?>
